@@ -1,0 +1,51 @@
+@font-face {
+	font-family: "iconfont";
+	src: url('../fonts/iconfont.ttf') format('truetype'), url('../fonts/riding.ttf') format('truetype');
+	/* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+.iconfont {
+	font-family: "iconfont" !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-iconfuzhi:before {
+	content: "\e62b";
+}
+
+.icon-yijing:before {
+	content: "\e606";
+}
+
+.icon-shiwan:before {
+	content: "\e6e8";
+}
+
+.icon-zhandou:before {
+	content: "\e74f";
+}
+
+.icon-chuanships1:before {
+	content: "\e65a";
+}
+
+@font-face {
+	font-family: "riding";
+	src: url('../fonts/riding.ttf') format('truetype');
+	/* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+.riding {
+	font-family: "riding" !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-cycling:before {
+	content: "\e62d";
+}

@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/vue.min.js" ></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">今天吃啥</h1>
+		</header>
+		<div class="mui-content" id="main">
+			<div id="" class="mui-row">
+				<div id="p-content" class="mui-col-sm-12 mui-col-xs-12" style="padding-top: 10px;padding-left: 10px;">
+					{{content}}
+				</div>
+			</div>
+			<div id="" class="mui-row">
+				<div id="" class="mui-col-sm-12 mui-col-xs-12" style="padding-left: 10px;padding-top: 10px;">
+					<button id="button-start" type="button" class="mui-btn" v-on:tap="toRun">点击或者摇一摇</button>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+		
+			//model
+			mdata = {}
+			mdata["content"] = "";
+			
+			//methods
+			mMethods = {}
+			mMethods["toRun"] = toRun;
+			
+			//vue
+			new Vue({
+				el:"#main",
+				data:mdata,
+				methods:mMethods,
+			});
+		
+		
+			what = [];
+			what[0] = "面";
+			what[1] = "稀饭";
+			what[2] = "米线";
+			what[3] = "炒饭";
+			what[4] = "炒菜";
+			what[5] = "牛排";
+			what[6] = "披萨";
+			what[7] = "小吃";
+			what[8] = "火锅";
+			what[9] = "包子";
+			what[10] = "饺子";
+			what[11] = "抄手";
+			what[12] = "鱼";
+			what[13] = "回锅肉";
+			what[14] = "烧排骨";
+			what[15] = "肉丝类";
+ 
+ 
+ 			function toRun()
+ 			{
+ 				mdata.content = what[Math.round(Math.random()*(what.length-1))];
+ 			}
+ 
+ 	
+ 
+			//监听手机摇动事件
+ 			if (window.DeviceMotionEvent) {
+     			window.addEventListener('devicemotion', deviceMotionHandler, false);
+ 			} else {
+     			mui.alert('你的设备不支持DeviceMotion事件');
+ 			}
+  			var SHAKE_THRESHOLD = 3000;
+  			var last_update = 0;
+  			var x = y = z = last_x = last_y = last_z = 0;
+  			//摇一摇开关，1表示开，0表示关
+  			var canShake = 1;
+   
+  			function deviceMotionHandler(eventData) {
+      			var acceleration = eventData.accelerationIncludingGravity;
+      			var curTime = new Date().getTime();
+  
+     			//100ms监听一次，拒绝重复监听
+     			if ((curTime - last_update) > 100 && canShake==1) { 
+         			var diffTime = curTime - last_update;
+         			last_update = curTime;
+         			x = acceleration.x;
+         			y = acceleration.y;
+         			z = acceleration.z;
+         			var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+         			if (speed > SHAKE_THRESHOLD) { 
+        	 			mdata.content = what[Math.round(Math.random()*(what.length-1))] ;
+        	 			window.navigator.vibrate(1000);
+     
+         			}
+         			last_x = x;
+         			last_y = y;
+         			last_z = z;
+     			}
+ 			}
+		</script>
+	</body>
+
+</html>

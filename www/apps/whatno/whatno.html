@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>猜数字</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.js"></script>
+		<script type="text/javascript" src="../../js/vue.min.js" ></script>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">猜数字</h1>
+		</header>
+		<div class="mui-content" id="main">
+			<div id="" class="mui-row">
+				<div id="d1" class="mui-col-sm-12 mui-col-xs-12" style="padding: 10px;">
+					请选择四个不重复数字
+				</div>
+			</div>
+			<div id="" class="mui-input-row">
+				<input type="number" name="i1" id="to-input" value="" readonly="" class="mui-input-clear" v-model="input1" />
+			</div>
+			
+			<div id="" class="mui-row" style="padding-top: 10px;padding-left: 10px;padding-right: 10px;">
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b1" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('1')">1</button>
+				</div>
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b2" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('2')">2</button>
+				</div>
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b3" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('3')">3</button>
+				</div>
+			</div>
+			<div id="" class="mui-row" style="padding-left: 10px;padding-right: 10px;">
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b4" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('4')">4</button>
+				</div>
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b5" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('5')">5</button>
+				</div>
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b6" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('6')">6</button>
+				</div>
+			</div>
+			<div id="" class="mui-row" style="padding-left: 10px;padding-right: 10px;">
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b7" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('7')">7</button>
+				</div>
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b8" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('8')">8</button>
+				</div>
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b9" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onNo('9')">9</button>
+				</div>
+			</div>
+			<div id="" class="mui-row" style="padding-left: 10px;padding-right: 10px;">
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="b0" type="button" class="mui-btn mui-btn-block bb " v-on:tap="onNo('0')">0</button>
+				</div>
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+				</div>
+				
+				<div id="" class="mui-col-sm-4 mui-col-xs-4">
+					<button id="ok" type="button" class="mui-btn mui-btn-block bb" v-on:tap="onOk">确定</button>
+				</div>
+				
+			</div>
+		    
+		</div>
+		
+		<script type="text/javascript">
+		
+		
+			//model
+			mdata = {}
+			mdata["input1"] = "";
+			
+			//methods
+			mMethods = {}
+			mMethods["onNo"] = onNo;
+			mMethods["onOk"] = onOk;
+			
+			//vue
+			new Vue({
+				el:"#main",
+				data:mdata,
+				methods:mMethods,
+			});
+			
+			//
+			//var mdata.input1 = document.getElementById("to-input");
+			theNo = getCode();
+			
+			
+			function onNo(what)
+			{
+				if(mdata.input1.indexOf(what)==-1&&mdata.input1.length<4)
+				{
+					mdata.input1 = mdata.input1 + what;
+				}
+			}
+			
+			//mui.alert(theNo);
+			
+			function onOk()
+			{
+				A = 0;
+				B = 0;
+				if(mdata.input1.length == 4)
+				{
+					
+					
+					if (theNo == mdata.input1)
+					{
+						mui.alert("恭喜你，猜对了。");
+					}
+					else{
+						if (mdata.input1.charAt(0) == theNo.charAt(0))
+						{
+							A = A + 1;
+						}
+						else if ( theNo.indexOf(mdata.input1.charAt(0)) != -1)
+						{
+							B = B + 1;
+						}
+						if (mdata.input1.charAt(1) == theNo.charAt(1))
+						{
+							A = A + 1;
+						}
+						else if ( theNo.indexOf(mdata.input1.charAt(1)) != -1)
+						{
+							B = B + 1;
+						}
+						if (mdata.input1.charAt(2) == theNo.charAt(2))
+						{
+							A = A + 1;
+						}
+						else if ( theNo.indexOf(mdata.input1.charAt(2)) != -1)
+						{
+							B = B + 1;
+						}
+						if (mdata.input1.charAt(3) == theNo.charAt(3))
+						{
+							A = A + 1;
+						}
+						else if ( theNo.indexOf(mdata.input1.charAt(3)) != -1)
+						{
+							B = B + 1;
+						}
+						
+						mui.alert("位置和数字正确数量为："+ A +" 数字正确位置不正确数量为:" +B);
+					}
+				}
+			}
+			
+			
+			
+			function getCode()
+			{
+				str1 = "";
+				ss = [];
+				ss.push(1);
+				ss.push(2);
+				ss.push(3);
+				ss.push(4);
+				ss.push(5);
+				ss.push(6);
+				ss.push(7);
+				ss.push(8);
+				ss.push(9);
+				ss.push(0);
+				while(str1.length < 4)
+				{
+					f = Math.round(Math.random()*(ss.length -1));
+					k = ss[f];
+					ss.splice(f,1);
+					str1 = str1 + k;
+				}
+				return str1;
+			}
+		
+		</script>
+	</body>
+
+</html>

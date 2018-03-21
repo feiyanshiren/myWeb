@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的应用</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script src="bugua.js"></script>
+		<script type="text/javascript" src="../../js/vue.min.js" ></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		
+		
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">卜卦程序</h1>
+		</header>
+		<div class="mui-content" id="bugua">
+			<div id="" class="mui-row">
+				<div id="content1" class="mui-col-xs-12 mui-col-sm-12" style="padding-top: 10px;padding-left: 5px;" v-html="content">
+					{{content}}
+				</div>
+			</div>
+			<div id="" class="mui-row">
+				<div class="mui-col-sm-12 mui-col-xs-12" style="padding-left: 10px;padding-top: 10px;padding-bottom: 10px;">
+					<button id="start-bugua" type="button" class="mui-btn" v-on:tap="getGua">{{btnBuGua}}</button>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+		
+		//model
+		mData = {};
+		mData["content"] = "";
+		mData["btnBuGua"] = "开始卜卦";
+		
+		//methods
+		mMethods = {}
+		mMethods["getGua"] = tobtn; 
+
+		//vue
+		new Vue({
+			el:"#bugua",
+			data:mData,
+			methods:mMethods,
+		});
+
+
+		function lingling()
+		{
+			mData["content"] = mData["content"] + "天灵灵，地灵灵 ...<br/>";
+		}
+		
+		function tobtn()
+		{
+			
+		 	mData["btnBuGua"] = "重新卜卦";
+		 		setTimeout(function(){
+			mData["content"] = "正在卜卦请稍后...<br/>";
+		
+			setTimeout(function(){
+			lingling();
+			
+			setTimeout(function(){
+			lingling();
+			setTimeout(function(){
+			lingling();
+			setTimeout(function(){
+			lingling();	
+			setTimeout(function(){
+			mData["content"] = mData["content"] + "我爱静静!<br/>";
+			setTimeout(function(){
+			mData["content"] = fanyi(paoliuci());
+			
+			
+		},1000);
+			
+		},1000);
+			
+		},1000);
+			
+		},1000);
+			
+		},1000);
+			
+		},1000);
+			
+		},1000);
+		}
+		
+		</script>
+		
+	</body>
+
+</html>

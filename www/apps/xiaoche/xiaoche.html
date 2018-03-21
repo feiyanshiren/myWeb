@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">小车控制</h1>
+		</header>
+		<div class="mui-content" id="main">
+			</br>
+		    <div class="mui-row">
+		    	<div class="mui-col-xs-1"></div>
+		    	
+		        <div class="mui-col-xs-10">
+		        	<img :src="img" height="320" width="320" />
+		        </div>
+		        <div class="mui-col-xs-1"></div>
+		    </div>
+		   </br>
+		    <div class="mui-row">
+		        <div class="mui-col-xs-5"></div>
+		        <div class="mui-col-xs-2">
+		        	<button type="button" class="mui-btn mui-btn-blue" v-on:touchstart="dqian" v-on:touchend="uqian">前</button>
+		        </div>
+		        <div class="mui-col-xs-5"></div>
+		    </div>
+			</br>
+			<div class="mui-row">
+		        <div class="mui-col-xs-3"></div>
+		        <div class="mui-col-xs-2">
+		        	<button type="button" class="mui-btn mui-btn-blue" v-on:touchstart="dzuo" v-on:touchend="uzuo">左</button>
+		        </div>
+		        <div class="mui-col-xs-2"><button type="button" class="mui-btn mui-btn-blue" v-on:touchstart="dting">停</button></div>
+		        <div class="mui-col-xs-2"><button type="button" class="mui-btn mui-btn-blue" v-on:touchstart="dyou" v-on:touchend="uyou">右</button></div>
+				<div class="mui-col-xs-3"></div>
+			</div>
+			</br>
+		    <div class="mui-row">
+		        <div class="mui-col-xs-5"></div>
+		        <div class="mui-col-xs-2">
+		        	<button type="button" class="mui-btn mui-btn-blue" v-on:touchstart="dhou" v-on:touchend="uhou">后</button>
+		        </div>
+		        <div class="mui-col-xs-5"></div>
+		    </div>
+		</div>
+		<script type="text/javascript" src="../../js/vue.min.js" ></script>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			
+						//model
+			mdata = {}
+			mdata["img"] = "";
+			
+			//methods
+			mMethods = {}
+			mMethods["dqian"] = dqian;
+			mMethods["uqian"] = uqian;
+			mMethods["dhou"] = dhou;
+			mMethods["uhou"] = uhou;
+			mMethods["dzuo"] = dzuo;
+			mMethods["uzuo"] = uzuo;
+			mMethods["dyou"] = dyou;
+			mMethods["uyou"] = uyou;
+			mMethods["dting"] = dting;
+			
+			
+			//vue
+			new Vue({
+				el:"#main",
+				data:mdata,
+				methods:mMethods,
+			});
+			
+			function dqian(){sendMsg("qian");};
+			function uqian(){sendMsg("ting");};
+			function dhou(){sendMsg("hou");};
+			function uhou(){sendMsg("ting");};
+			function dzuo(){sendMsg("zuo");};
+			function uzuo(){sendMsg("ting");};
+			function dyou(){sendMsg("you");};
+			function uyou(){sendMsg("ting");};
+			function dting(){sendMsg("ting");};
+			
+			function sendMsg(msg)
+			{
+				mui.get('http://23.88.228.36/get/xiaoche/sendCmd.php',{msg:msg},function(data){
+				});
+			}
+			window.setInterval(function(){
+				
+				mui.get('http://23.88.228.36/get/xiaoche/getImg.php',{},function(data){
+					mdata["img"] = data;
+					//timestamp =  Date.parse(new Date()); 
+					//mui.alert("111");
+				});
+				//mui.alert("1");
+			},10);
+		</script>
+	</body>
+
+</html>

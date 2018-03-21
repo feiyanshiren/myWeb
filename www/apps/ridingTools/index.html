@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<script type="text/javascript" src="../../js/vue.min.js"></script>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">定位</h1>
+		</header>
+		<div class="mui-content" id="main">
+			<div class="mui-row">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>速度 km/h:</label>
+						<input type="number" class="mui-input-clear" v-model="speed">
+					</div>
+					<div class="mui-input-row">
+						<label>牙盘齿数:</label>
+						<input type="number" class="mui-input-clear" v-model="ya">
+					</div>
+					<div class="mui-input-row">
+						<label>飞轮齿数:</label>
+						<input type="number" class="mui-input-clear" v-model="fei">
+					</div>
+					<div class="mui-input-row">
+						<label>轮胎周长 mm:</label>
+						<input type="number" class="mui-input-clear" v-model="lun">
+					</div>
+					<div class="mui-input-row">
+						<label>踏频 /分:</label>
+						<input type="number" class="mui-input-clear" v-model="ta">
+					</div>
+				</form>
+			</div>
+			<div class="mui-row">
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" v-on:tap="onOk">计算踏频</button>
+			</div>
+			<div class="mui-row">
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" v-on:tap="onOk2">计算速度</button>
+			</div>
+			<div class="mui-row">
+				<ui class="mui-table-view">
+					<li class="mui-table-view-cell mui-row">
+						<div class="mui-col-xs-6">
+							<b>车轮规格</b>
+						</div>
+						<div class="mui-col-xs-6">
+							<b>周长</b>
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-row" v-for="da in data">
+						<div class="mui-col-xs-6">
+							{{da.lun}}
+						</div>
+						<div class="mui-col-xs-6">
+							{{da.chang}}
+						</div>
+					</li>
+				</ui>
+			</div>
+		</div>
+
+		<script>
+			//model
+			mdata = {
+				"speed": "",
+				"ya": 53,
+				"fei": 11,
+				"lun": 1250,
+				"ta": "",
+				"data": [{
+						"lun": "700c*38mm",
+						"chang": 2180
+					},
+					{
+						"lun": "700c*35mm",
+						"chang": 2168
+					},
+					{
+						"lun": "700c*32mm",
+						"chang": 2155
+					},
+					{
+						"lun": "700c*30mm",
+						"chang": 2145
+					},
+					{
+						"lun": "700c*28mm",
+						"chang": 2136
+					},
+					{
+						"lun": "700c*25mm",
+						"chang": 2124
+					},
+				]
+
+			};
+
+			//methods
+			mMethods = {
+				"onOk": function() {
+					if(mdata.ya == "" || mdata.fei == "" || mdata.lun == "" || mdata.speed == "") {
+						mui.alert("有数据为空");
+						return;
+					}
+					ya = parseInt(mdata.ya);
+					fei = parseInt(mdata.fei);
+					lun = parseInt(mdata.lun);
+					speed = parseInt(mdata.speed)
+					if(fei == 0 || ya == 0 || lun == 0) {
+						mui.alert("有数据为0");
+						return;
+					};
+
+					mdata.ta = (speed * 1000000) / ((ya / fei) * lun * 60);
+				},
+				"onOk2": function() {
+					if(mdata.ya == "" || mdata.fei == "" || mdata.lun == "" || mdata.ta == "") {
+						mui.alert("有数据为空");
+						return;
+					}
+					ya = parseInt(mdata.ya);
+					fei = parseInt(mdata.fei);
+					lun = parseInt(mdata.lun);
+					ta = parseInt(mdata.ta);
+					if(fei == 0) {
+						mui.alert("飞轮数不能为0");
+						return;
+					}
+
+					mdata.speed = ((ya / fei) * lun * ta * 60) / 1000000;
+				}
+			};
+
+			//vue
+			new Vue({
+				el: "#main",
+				data: mdata,
+				methods: mMethods,
+			});
+		</script>
+
+	</body>
+
+</html>

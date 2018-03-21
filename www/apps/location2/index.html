@@ -1,0 +1,10 @@
+<div id="main1"></div>
+<script src="../../js/mui.min.js"></script>
+<script type="text/javascript">
+	mui.init();
+	main1 = document.getElementById("main1");
+	mui.get('http://23.88.228.36/getLbs',{},function(data){
+					main1.innerHTML = data;
+				});
+	
+</script>
