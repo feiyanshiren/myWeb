@@ -8,8 +8,8 @@ import sys
 import imp
 import os
 # import socket
-# from cherrypy import wsgiserver
-from cheroot import wsgi
+from cherrypy import wsgiserver
+# from cheroot import wsgi
 import traceback
 path = os.path.split(os.path.realpath(__file__))[0]
 if path not in sys.path:
@@ -122,18 +122,19 @@ application = bottle.default_app()
 
 # application.run(host='0.0.0.0', port=8848)
 
-#server = wsgiserver.CherryPyWSGIServer(
-#    bind_addr=('0.0.0.0', 8888),
-#    wsgi_app=application,
-#    request_queue_size=500,
-#    server_name=socket.gethostname()
-#)
+server = wsgiserver.CherryPyWSGIServer(
+    bind_addr=('0.0.0.0', 80),
+    wsgi_app=application
+    # request_queue_size=500,
+    # server_name=socket.gethostname()
+)
 
-
+"""
 server = wsgi.Server(
-    bind_addr=('0.0.0.0', 8848),
+    bind_addr=('0.0.0.0', 80),
     wsgi_app=application
 )
+"""
 
 server.start()
 
