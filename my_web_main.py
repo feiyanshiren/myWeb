@@ -4,8 +4,8 @@
 服务器程序主入口
 """
 #引头
-from gevent import monkey
-monkey.patch_all()
+# from gevent import monkey
+# monkey.patch_all()
 import sys
 import imp
 import os
@@ -17,7 +17,7 @@ if path not in sys.path:
 # from cheroot import wsgi
 import traceback
 
-from bottle import request, error, response, route, static_file
+from bottle import request, error, response, route, static_file, run
 import bottle
 
 
@@ -120,6 +120,7 @@ def server_static(filepath):
 config.main_path = os.path.split(os.path.realpath(__file__))[0]
 
 run(host='0.0.0.0', port=8848, server="gevent")
+# run(host='0.0.0.0', port=8848)
 
 # application = bottle.default_app()
 
