@@ -4,16 +4,19 @@
 服务器程序主入口
 """
 #引头
+from gevent import monkey
+monkey.patch_all()
 import sys
 import imp
 import os
-# import socket
-from cherrypy import wsgiserver
-# from cheroot import wsgi
-import traceback
 path = os.path.split(os.path.realpath(__file__))[0]
 if path not in sys.path:
     sys.path.append(path)
+# import socket
+# from cherrypy import wsgiserver
+# from cheroot import wsgi
+import traceback
+
 from bottle import request, error, response, route, static_file
 import bottle
 
@@ -116,18 +119,19 @@ def server_static(filepath):
 
 config.main_path = os.path.split(os.path.realpath(__file__))[0]
 
-# run(host='0.0.0.0', port=8848)
+run(host='0.0.0.0', port=8848, server="gevent")
 
-application = bottle.default_app()
+# application = bottle.default_app()
 
 # application.run(host='0.0.0.0', port=8848)
-
+"""
 server = wsgiserver.CherryPyWSGIServer(
     bind_addr=('0.0.0.0', 80),
     wsgi_app=application
     # request_queue_size=500,
     # server_name=socket.gethostname()
 )
+"""
 
 """
 server = wsgi.Server(
@@ -136,6 +140,6 @@ server = wsgi.Server(
 )
 """
 
-server.start()
+# server.start()
 
 
