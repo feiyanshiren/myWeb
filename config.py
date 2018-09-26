@@ -3,8 +3,9 @@
 配置文件
 """
 import time
+from get import *
 
-
+mod_map = {}
 main_path = ""
 
 

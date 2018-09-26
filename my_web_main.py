@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 """
 服务器程序主入口
 """
-#引头
-# from gevent import monkey
-# monkey.patch_all()
+# 引头
+from gevent import monkey
+monkey.patch_all()
 import sys
-import imp
+# import imp
 import os
 path = os.path.split(os.path.realpath(__file__))[0]
 if path not in sys.path:
@@ -20,11 +20,10 @@ import traceback
 from bottle import request, error, response, route, static_file, run
 import bottle
 
-
 import config
-#import web
+# import web
 app = bottle.app()
-#更变运行字符环境
+# 更变运行字符环境
 reload(sys)
 sys.setdefaultencoding('utf-8')  # @UndefinedVariable
 
@@ -68,26 +67,30 @@ class DiySelf():
         return request.body
 
     def getIP(self):
-        return request.environ.get('REMOTE_ADDR')#@UndefinedVariable @IgnorePep8
+        # @UndefinedVariable @IgnorePep8
+        return request.environ.get('REMOTE_ADDR')
 
 
-#@get('/<name>')
+# @get('/<name>')
 @app.route('/<name>', method=['OPTIONS', 'GET'])
 @enable_cors
 def theGet(name):
     try:
-        #获取url
+        # 获取url
         method = name
         method = method.replace("/", "")
+        """
         mm = imp.load_source(method,
                              config.main_path + "/get/" + method + ".py")
         mtd = getattr(mm, "post")
+        """
         diy_self = DiySelf(config, request.params)
-        return mtd(diy_self)
+        # return mtd(diy_self)
+        return config.mod_map.get(method).post(diy_self)
     except:
         e = traceback.format_exc()
         return u'{"code":-2,"tip":"未知url","error":"%s","name":"%s"}'\
-                    % (str(e), name)
+            % (str(e), name)
 
 
 #@post('/<name>')
@@ -97,11 +100,14 @@ def thePost(name):
     try:
         method = name
         method = method.replace("/", "")
+        """
         mm = imp.load_source(method,
                         config.main_path + "/post/" + method + ".py")
         mtd = getattr(mm, "post")
+        """
         diy_self = DiySelf(config, request.forms)
-        return mtd(diy_self)
+        # return mtd(diy_self)
+        return config.mod_map.get(method).post(diy_self)
     except Exception, e:
         print e
         return u'{"code":-2,"tip":"未知url","error":%s}' % (str(e))
@@ -117,9 +123,12 @@ def server_static(filepath):
     return static_file(filepath, root='www')
 
 
+for k, v in sys.modules.items():
+    if "get." in k:
+        config.mod_map[k.replace("get.", "")] = v
 config.main_path = os.path.split(os.path.realpath(__file__))[0]
 
-run(host='0.0.0.0', port=8848, server="gevent")
+run(host='0.0.0.0', port=80, server="gevent", reloader=True)
 # run(host='0.0.0.0', port=8848)
 
 # application = bottle.default_app()
@@ -142,5 +151,3 @@ server = wsgi.Server(
 """
 
 # server.start()
-
-
