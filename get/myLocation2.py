@@ -29,7 +29,7 @@ def post(self):
                 fff["time"] = format_birth
                 fff["phone"] = sss1[3]
                 jo = json.loads(sss1[2])
-                if jo != None:
+                if jo is not None:
                     sss3 = "<a href='http://api.map.baidu.com/marker?location=%s,%s&coord_type=bd09ll&title=当前位置&content=%s&output=html&src=sanyeshu|myLocation3'>地图</a>"%(str(jo.get("lat","0")),str(jo.get("lng","0")),jo.get("location",""))
 #                     sss3 = "<a href='http://api.map.baidu.com/geocoder?location=%s,%s&coord_type=bd09ll&output=html&src=sanyeshu|myLocation3'>地图</a>"%(str(jo.get("lat","0")),str(jo.get("lng","0")))
                     fff["map"] = sss3
