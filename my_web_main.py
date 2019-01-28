@@ -128,7 +128,7 @@ for k, v in sys.modules.items():
         config.mod_map[k.replace("get.", "")] = v
 config.main_path = os.path.split(os.path.realpath(__file__))[0]
 
-run(host='0.0.0.0', port=80, server="gevent", reloader=True)
+run(host='0.0.0.0', port=80, server="gevent")
 # run(host='0.0.0.0', port=8848)
 
 # application = bottle.default_app()
