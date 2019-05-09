@@ -4,8 +4,8 @@
 服务器程序主入口
 """
 # 引头
-from gevent import monkey
-monkey.patch_all()
+# from gevent import monkey
+# monkey.patch_all()
 import sys
 # import imp
 import os
@@ -24,8 +24,8 @@ import config
 # import web
 app = bottle.app()
 # 更变运行字符环境
-reload(sys)
-sys.setdefaultencoding('utf-8')  # @UndefinedVariable
+# reload(sys)
+# sys.setdefaultencoding('utf-8')  # @UndefinedVariable
 
 
 # the decorator
@@ -89,7 +89,7 @@ def theGet(name):
         return config.mod_map.get(method).post(diy_self)
     except:
         e = traceback.format_exc()
-        return u'{"code":-2,"tip":"未知url","error":"%s","name":"%s"}'\
+        return '{"code":-2,"tip":"未知url","error":"%s","name":"%s"}'\
             % (str(e), name)
 
 
@@ -108,9 +108,8 @@ def thePost(name):
         diy_self = DiySelf(config, request.forms)
         # return mtd(diy_self)
         return config.mod_map.get(method).post(diy_self)
-    except Exception, e:
-        print e
-        return u'{"code":-2,"tip":"未知url","error":%s}' % (str(e))
+    except:
+        return '{"code":-2,"tip":"未知url"}'
 
 
 @error(404)
@@ -128,8 +127,8 @@ for k, v in sys.modules.items():
         config.mod_map[k.replace("get.", "")] = v
 config.main_path = os.path.split(os.path.realpath(__file__))[0]
 
-run(host='0.0.0.0', port=80, server="gevent")
-# run(host='0.0.0.0', port=8848)
+# run(host='0.0.0.0', port=80, server="gevent")
+run(host='0.0.0.0', port=8848)
 
 # application = bottle.default_app()
 

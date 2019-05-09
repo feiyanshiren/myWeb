@@ -9,5 +9,5 @@ def post(self):
         str1 = files.read()
         files.close()
         return str1
-    except Exception,e:
+    except:
         return traceback.format_exc()

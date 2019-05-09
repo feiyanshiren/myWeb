@@ -1,0 +1,7 @@
+*.pyc
+/www/apps/mv/*.png
+*.DS_Store
+*.project
+*.pydevproject
+.settings
+/www/apps/mv/*.mp4

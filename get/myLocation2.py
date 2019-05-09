@@ -61,5 +61,5 @@ def post(self):
                 strrtn = strrtn + k.get("time","") + " " + k.get("location","")+" "+k.get("map","")+" "+str(k.get("type",0)) +" " + str(k.get("battery",-1)) + "<br />"
             
             return strrtn
-    except Exception,e:
-        return u'{"code":-1,"tip":"%s"}' %(str(e))
+    except:
+        return '{"code":-1}' 

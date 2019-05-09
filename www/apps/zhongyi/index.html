@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">mui.init()</script>
+		<script type="text/javascript" src="../../js/vue.min.js"></script>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">中医</h1>
+		</header>
+		<div class="mui-content" id="main">
+		</br>
+			<div class="mui-row">
+				<div class="mui-col-xs-3">
+				</div>
+				<div class="mui-col-xs-3">
+				</div>
+				<div class="mui-col-xs-3">
+					请选择症状
+				</div>
+			</div>
+			</br>
+			<div class="mui-row">
+				<div class="mui-col-xs-12">
+					<ul class="mui-table-view">
+						<li v-for="(item, index) in items" class="mui-table-view-cell">
+							<div class="mui-input-row mui-checkbox">
+							  <label>{{item}}</label>
+							  <input v-bind:name="item" v-bind:value="item" type="checkbox" v-on:click="onCheck(item)">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			</br>
+			<div class="mui-row">
+				<div class="mui-col-xs-12">
+					<button type="button" class="mui-btn mui-btn-block" v-on:tap="onOk">确认</button>
+				</div>
+			</div>
+			
+		</div>
+
+		<script>
+			// the_ip = "http://23.88.228.36";
+			the_ip = "http://127.0.0.1:8848";
+			//model
+			mdata = {
+				"items": ["测试1", "测试2"],
+				"checked": [],
+
+			};
+
+			//methods
+			mMethods = {
+				"onOk": function() {
+					//mui.alert("test");
+					put_data = encodeURI(JSON.stringify(mdata.checked),"utf-8");
+					//put_data = JSON.stringify(mdata.checked);
+					/*
+					mui.get('http://127.0.0.1:8848/get_pan_duan',{list:put_data},function(data){
+					//mdata.items = JSON.parse(data);
+					mui.alert(data);
+				});
+				*/
+				
+				 mui.get(the_ip + '/get_pan_duan',{list:put_data},function(data){
+					//mdata.items = JSON.parse(data);
+					mui.alert(data);
+				});
+				 
+				},
+				"onCheck": function(item){
+					//mui.alert(item);
+					index =  mdata.checked.indexOf(item);
+					if(index > -1){
+						mdata.checked.splice(index, 1);
+					}
+					else{
+						mdata.checked.push(item);
+					}
+					
+					//mui.alert(JSON.stringify(mdata.checked));
+				},
+			};
+
+			//vue
+			new Vue({
+				el: "#main",
+				data: mdata,
+				methods: mMethods,
+			});
+			/*
+			mui.get('http://127.0.0.1:8848/get_zheng_zhuang_list',{},function(data){
+					mdata.items = JSON.parse(data);
+				});
+				*/
+				
+				 mui.get(the_ip + '/get_zheng_zhuang_list',{},function(data){
+					mdata.items = JSON.parse(data);
+				});
+				 
+
+		</script>
+
+	</body>
+
+</html>
